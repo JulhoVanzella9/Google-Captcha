@@ -230,20 +230,15 @@
       font-size: 12px;
     }
     
-    /* Modal */
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.95);
+      inset: 0;
+      background: rgba(15, 15, 15, 0.97);
       z-index: 99999;
       display: none;
-      overflow-y: auto;
-      padding: 20px;
+      padding: 16px;
+      box-sizing: border-box;
     }
     
     .modal-overlay.show {
@@ -252,140 +247,153 @@
       justify-content: center;
     }
     
+    /* Modal Container */
     .modal {
-      position: relative;
-      background: #1e1e1e;
-      border-radius: 24px;
-      padding: 32px 24px;
-      text-align: center;
+      background: linear-gradient(145deg, #1f1f1f, #181818);
+      border-radius: 20px;
+      padding: 32px 28px;
       width: 100%;
-      max-width: 380px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
-      animation: modalAppear 0.4s ease-out forwards;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
+      animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     
-    @keyframes modalAppear {
-      0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+    @keyframes modalPop {
+      0% { opacity: 0; transform: scale(0.85) translateY(30px); }
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
     
+    /* Modal Title */
     .modal-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      color: #fff;
-      font-size: 28px;
+      color: #ffffff;
+      font-size: 26px;
       font-weight: 800;
-      margin: 0 0 12px 0;
+      margin: 0 0 16px 0;
+      display: block;
+      line-height: 1.3;
     }
     
+    .modal-title-emoji {
+      font-size: 28px;
+      vertical-align: middle;
+    }
+    
+    /* Modal Subtitle */
     .modal-subtitle {
-      color: #888;
+      color: #888888;
       font-size: 14px;
-      margin: 0 0 20px 0;
-      line-height: 1.5;
+      line-height: 1.6;
+      margin: 0 0 24px 0;
     }
     
-    .modal-subtitle span {
+    .modal-subtitle .highlight {
       color: #FFD700;
       font-weight: 700;
     }
     
+    /* Prize Box with Dashed Border */
     .prize-box {
-      border: 2px dashed #00CED1;
+      border: 2px dashed #00e5ff;
       border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 20px;
-      background: rgba(0, 206, 209, 0.05);
+      padding: 24px 20px;
+      margin: 0 0 24px 0;
+      background: rgba(0, 229, 255, 0.03);
     }
     
-    .prize-box-title {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+    .prize-box-label {
       color: #FF6B9D;
       font-size: 14px;
       font-weight: 600;
-      margin-bottom: 8px;
+      margin: 0 0 12px 0;
+    }
+    
+    .prize-box-label-emoji {
+      font-size: 16px;
+      margin-right: 6px;
     }
     
     .prize-value {
-      color: #00CED1;
-      font-size: 52px;
+      color: #00e5ff;
+      font-size: 56px;
       font-weight: 800;
       margin: 0;
-      line-height: 1.1;
+      line-height: 1;
+      letter-spacing: -1px;
     }
     
     .prize-description {
-      color: #888;
+      color: #777777;
       font-size: 13px;
-      margin-top: 8px;
+      margin: 12px 0 0 0;
     }
     
+    /* CTA Button */
     .modal-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      display: block;
       width: 100%;
-      background: linear-gradient(135deg, #FF6B9D, #FF4D7D);
-      color: #fff;
+      background: linear-gradient(135deg, #FF6B8A, #FF4D6D);
+      color: #ffffff;
       border: none;
       padding: 18px 24px;
       border-radius: 14px;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.2s;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 4px 15px rgba(255, 77, 125, 0.4);
+      box-shadow: 0 8px 25px rgba(255, 77, 109, 0.45);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin: 0;
     }
     
     .modal-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 77, 125, 0.5);
+      box-shadow: 0 12px 30px rgba(255, 77, 109, 0.55);
     }
     
     .modal-btn:active {
       transform: translateY(1px);
+      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
     }
     
     .modal-btn:disabled {
-      opacity: 0.7;
+      opacity: 0.6;
       cursor: not-allowed;
+      transform: none;
     }
     
+    .modal-btn-emoji {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+    
+    /* Timer Warning Box */
     .timer-box {
+      background: #252525;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 16px 0 0 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      background: #2a2a2a;
-      border-radius: 10px;
-      padding: 12px 16px;
-      margin-top: 12px;
+      gap: 10px;
     }
     
-    .timer-box svg {
-      color: #FFD700;
-      width: 18px;
-      height: 18px;
+    .timer-icon {
+      color: #FFB800;
+      font-size: 16px;
     }
     
     .timer-text {
-      color: #aaa;
+      color: #999999;
       font-size: 14px;
     }
     
-    .timer-text span {
+    .timer-text .countdown {
       color: #FF6B6B;
       font-weight: 700;
     }
     
-    /* Body lock when modal is open */
+    /* Body lock */
     body.modal-open {
       overflow: hidden;
     }
@@ -466,35 +474,27 @@
   
   <!-- Modal -->
   <div class="modal-overlay" id="modal">
-    <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal">
       <h2 class="modal-title">
-        <span>🎉</span>
-        <span>Congratulations!</span>
-        <span>🎉</span>
+        <span class="modal-title-emoji">🎉</span> Congratulations! <span class="modal-title-emoji">🎉</span>
       </h2>
-      <p class="modal-subtitle">You are our client number <span>1000</span> and won an exclusive prize.</p>
+      <p class="modal-subtitle">You are our client number <span class="highlight">1000</span> and won an exclusive prize.</p>
       
       <div class="prize-box">
-        <div class="prize-box-title">
-          <span>🎊</span>
-          <span>Amazing! You won:</span>
-        </div>
+        <p class="prize-box-label">
+          <span class="prize-box-label-emoji">🎊</span>Amazing! You won:
+        </p>
         <p class="prize-value">50% OFF</p>
         <p class="prize-description">Exclusive prize on the platform</p>
       </div>
       
       <button class="modal-btn" onclick="claimPrize()">
-        <span>🎁</span>
-        <span>CLAIM MY PRIZE</span>
+        <span class="modal-btn-emoji">🎁</span>CLAIM MY PRIZE
       </button>
       
       <div class="timer-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-          <line x1="12" y1="9" x2="12" y2="13"></line>
-          <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <span class="timer-text">This prize expires in <span id="countdown">04:57</span> minutes</span>
+        <span class="timer-icon">⚠</span>
+        <span class="timer-text">This prize expires in <span class="countdown" id="countdown">04:57</span> minutes</span>
       </div>
     </div>
   </div>
