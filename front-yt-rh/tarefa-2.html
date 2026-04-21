@@ -19,8 +19,8 @@
     .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #fff; padding: 2px; }
     .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
     .captcha-item:hover { filter: brightness(0.9); }
-    .captcha-item.selected { border: 3px solid #4A90E2; padding: 0; }
-    .captcha-item.selected img { transform: scale(0.85); border-radius: 4px; }
+    .captcha-item.selected { box-shadow: inset 0 0 0 3px #4A90E2; }
+    .captcha-item.selected img { transform: scale(1); }
     .check-badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; background-color: #4A90E2; border-radius: 50%; display: flex; items-center; justify-center; opacity: 0; transform: scale(0.5); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; border: 2px solid white; }
     .selected .check-badge { opacity: 1; transform: scale(1); }
   </style>
@@ -140,19 +140,68 @@
     </footer>
   </div>
 
+  <!-- Feedback Modal -->
+  <div id="feedbackModal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+    <div id="feedbackCard" class="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full transform scale-95 opacity-0 transition-all duration-300">
+      <div id="feedbackIcon" class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"></div>
+      <h3 id="feedbackTitle" class="text-xl font-bold text-center mb-2"></h3>
+      <p id="feedbackText" class="text-gray-600 text-center text-sm mb-4"></p>
+      <div id="feedbackReward" class="bg-green-50 border-2 border-dashed border-green-400 rounded-xl p-3 mb-4">
+        <p class="text-green-700 text-center font-bold text-sm">+US$ 100 added to your balance!</p>
+      </div>
+      <button onclick="continueTasks()" class="w-full py-3 rounded-xl font-bold text-white text-center transition-all duration-300 active:scale-95" style="background-color: #4285F4;">
+        Continue
+      </button>
+    </div>
+  </div>
+
   <script>
     let selected = false;
+    
+    // The correct answer is: all traffic lights ARE selected correctly (user should click "Correct")
+    const correctAnswer = 'correct';
+    
     function handleReaction(reaction) {
       if (selected) return;
       selected = true;
       
+      const isCorrect = reaction === correctAnswer;
+      const modal = document.getElementById('feedbackModal');
+      const card = document.getElementById('feedbackCard');
+      const icon = document.getElementById('feedbackIcon');
+      const title = document.getElementById('feedbackTitle');
+      const text = document.getElementById('feedbackText');
+      
+      if (isCorrect) {
+        icon.innerHTML = '<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>';
+        icon.className = 'w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-green-500';
+        title.textContent = 'Correct!';
+        title.className = 'text-xl font-bold text-center mb-2 text-green-600';
+        text.textContent = 'Great job! You correctly identified the captcha verification.';
+      } else {
+        icon.innerHTML = '<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>';
+        icon.className = 'w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-red-500';
+        title.textContent = 'Incorrect!';
+        title.className = 'text-xl font-bold text-center mb-2 text-red-600';
+        text.textContent = 'Oops! That was not the right answer. But no worries, you still earned a reward!';
+      }
+      
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        card.classList.remove('scale-95', 'opacity-0');
+        card.classList.add('scale-100', 'opacity-100');
+      }, 50);
+    }
+    
+    function continueTasks() {
       const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2058/2058-preview.mp3');
       audio.play().catch(() => {});
       
       const balanceEl = document.getElementById('balance');
       const balanceBox = document.getElementById('balanceBox');
       
-      // Better animation feedback
+      document.getElementById('feedbackModal').classList.add('hidden');
+      
       balanceBox.classList.add('scale-110', 'shadow-[0_0_20px_rgba(66,133,244,0.4)]', 'border-solid');
       
       let current = 89; 
