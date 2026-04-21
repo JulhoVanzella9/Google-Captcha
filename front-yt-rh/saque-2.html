@@ -115,11 +115,11 @@
       }
     }, 1000);
 
-    // Back redirect
+    // Back redirect - goes to roleta.html when user tries to go back
     history.pushState(null, null, location.href);
     window.onpopstate = function() {
       history.pushState(null, null, location.href);
-      window.location.href = "https://v0-roleta-de-descontos-tik-tok.vercel.app/";
+      window.location.href = "roleta.html";
     };
 
     // Comments
