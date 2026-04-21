@@ -19,10 +19,7 @@
     .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #fff; padding: 2px; }
     .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
     .captcha-item:hover { filter: brightness(0.9); }
-    .captcha-item.selected { box-shadow: inset 0 0 0 3px #4A90E2; }
-    .captcha-item.selected img { transform: scale(1); }
-    .check-badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; background-color: #4A90E2; border-radius: 50%; display: flex; items-center; justify-center; opacity: 0; transform: scale(0.5); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; border: 2px solid white; }
-    .selected .check-badge { opacity: 1; transform: scale(1); }
+    .captcha-item.selected { box-shadow: inset 0 0 0 4px #4A90E2; }
   </style>
   
   <!-- TikTok Pixel -->
@@ -74,41 +71,32 @@
         <!-- Row 1 -->
         <div class="captcha-item selected">
           <img src="images/traffic-light-1.jpg" alt="Traffic light red" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item selected">
           <img src="images/traffic-light-2.jpg" alt="Traffic light green" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item">
           <img src="images/car-1.jpg" alt="Car" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <!-- Row 2 -->
         <div class="captcha-item">
           <img src="images/bicycle-1.jpg" alt="Bicycle" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item selected">
           <img src="images/traffic-light-3.jpg" alt="Multiple traffic lights" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item">
           <img src="images/car-5.jpg" alt="Black car" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <!-- Row 3 -->
         <div class="captcha-item selected">
           <img src="images/traffic-light-5.jpg" alt="Yellow traffic light" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item">
           <img src="images/other-4.jpg" alt="Bus stop" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
         <div class="captcha-item selected">
           <img src="images/traffic-light-4.jpg" alt="Pedestrian signal" class="w-full h-full object-cover">
-          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
         </div>
       </div>
       
@@ -145,20 +133,13 @@
     <div id="feedbackCard" class="bg-white rounded-2xl p-6 mx-4 max-w-sm w-full transform scale-95 opacity-0 transition-all duration-300">
       <div id="feedbackIcon" class="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center"></div>
       <h3 id="feedbackTitle" class="text-xl font-bold text-center mb-2"></h3>
-      <p id="feedbackText" class="text-gray-600 text-center text-sm mb-4"></p>
-      <div id="feedbackReward" class="bg-green-50 border-2 border-dashed border-green-400 rounded-xl p-3 mb-4">
-        <p class="text-green-700 text-center font-bold text-sm">+US$ 100 added to your balance!</p>
-      </div>
-      <button onclick="continueTasks()" class="w-full py-3 rounded-xl font-bold text-white text-center transition-all duration-300 active:scale-95" style="background-color: #4285F4;">
-        Continue
-      </button>
+      <p id="feedbackText" class="text-gray-600 text-center text-sm"></p>
     </div>
   </div>
 
   <script>
     let selected = false;
     
-    // The correct answer is: all traffic lights ARE selected correctly (user should click "Correct")
     const correctAnswer = 'correct';
     
     function handleReaction(reaction) {
@@ -177,13 +158,13 @@
         icon.className = 'w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-green-500';
         title.textContent = 'Correct!';
         title.className = 'text-xl font-bold text-center mb-2 text-green-600';
-        text.textContent = 'Great job! You correctly identified the captcha verification.';
+        text.textContent = 'Great job! You correctly identified the captcha.';
       } else {
         icon.innerHTML = '<svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>';
         icon.className = 'w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center bg-red-500';
         title.textContent = 'Incorrect!';
         title.className = 'text-xl font-bold text-center mb-2 text-red-600';
-        text.textContent = 'Oops! That was not the right answer. But no worries, you still earned a reward!';
+        text.textContent = 'Oops! Wrong answer. But you still earned your reward!';
       }
       
       modal.classList.remove('hidden');
@@ -191,6 +172,16 @@
         card.classList.remove('scale-95', 'opacity-0');
         card.classList.add('scale-100', 'opacity-100');
       }, 50);
+      
+      // Auto-dismiss after 1.5 seconds
+      setTimeout(() => {
+        card.classList.remove('scale-100', 'opacity-100');
+        card.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+          modal.classList.add('hidden');
+          continueTasks();
+        }, 300);
+      }, 1500);
     }
     
     function continueTasks() {
@@ -199,8 +190,6 @@
       
       const balanceEl = document.getElementById('balance');
       const balanceBox = document.getElementById('balanceBox');
-      
-      document.getElementById('feedbackModal').classList.add('hidden');
       
       balanceBox.classList.add('scale-110', 'shadow-[0_0_20px_rgba(66,133,244,0.4)]', 'border-solid');
       
