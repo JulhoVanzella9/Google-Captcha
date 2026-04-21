@@ -16,13 +16,12 @@
     .animate-slideInRight { animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .pulse-glow { animation: pulseGlow 2s infinite; }
     
-    .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #4A90E2; padding: 0; }
-    .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.2s ease; overflow: hidden; background-color: #fff; }
-    .captcha-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.2s ease; }
-    .captcha-item:hover { filter: brightness(0.95); }
-    .captcha-item.selected { outline: 4px solid #4A90E2; outline-offset: -4px; background-color: #4A90E2; }
-    .captcha-item.selected img { transform: scale(0.88); border-radius: 6px; }
-    .check-badge { position: absolute; top: 6px; left: 6px; width: 24px; height: 24px; background-color: #4A90E2; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.5); transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+    .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #fff; padding: 2px; }
+    .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+    .captcha-item:hover { filter: brightness(0.9); }
+    .captcha-item.selected { border: 3px solid #4A90E2; padding: 0; }
+    .captcha-item.selected img { transform: scale(0.85); border-radius: 4px; }
+    .check-badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; background-color: #4A90E2; border-radius: 50%; display: flex; items-center; justify-center; opacity: 0; transform: scale(0.5); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; border: 2px solid white; }
     .selected .check-badge { opacity: 1; transform: scale(1); }
   </style>
   
@@ -71,7 +70,7 @@
         <p class="text-sm opacity-90 mt-1 font-medium">Verify the selection below and confirm.</p>
       </div>
       
-      <div class="captcha-grid">
+      <div class="captcha-grid p-2">
         <!-- Row 1 -->
         <div class="captcha-item selected">
           <img src="images/bicycle-1.jpg" alt="Bicycle" class="w-full h-full object-cover">
