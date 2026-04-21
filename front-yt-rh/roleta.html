@@ -237,12 +237,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0,0,0,0.9);
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
       z-index: 99999;
       display: none;
-      overflow: hidden;
+      overflow-y: auto;
+      padding: 20px;
     }
     
     .modal-overlay.show {
@@ -253,80 +254,135 @@
     
     .modal {
       position: relative;
-      background: #1a1a1a;
-      border-radius: 20px;
-      padding: 40px 30px;
+      background: #1e1e1e;
+      border-radius: 24px;
+      padding: 32px 24px;
       text-align: center;
-      width: 90%;
-      max-width: 340px;
-      margin: 20px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-      border: 1px solid rgba(255,255,255,0.1);
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
       animation: modalAppear 0.4s ease-out forwards;
     }
     
     @keyframes modalAppear {
-      0% { 
-        opacity: 0; 
-        transform: scale(0.9) translateY(20px); 
-      }
-      100% { 
-        opacity: 1; 
-        transform: scale(1) translateY(0); 
-      }
+      0% { opacity: 0; transform: scale(0.9) translateY(20px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
     }
     
     .modal-title {
-      color: #FFD700;
-      font-size: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 28px;
       font-weight: 800;
-      margin: 0 0 16px 0;
-      text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+      margin: 0 0 12px 0;
     }
     
-    .modal-prize {
-      color: #4ADE80;
-      font-size: 48px;
-      font-weight: 800;
-      margin: 20px 0;
-      text-shadow: 0 4px 15px rgba(74, 222, 128, 0.4);
-    }
-    
-    .modal-text {
-      color: #aaa;
+    .modal-subtitle {
+      color: #888;
       font-size: 14px;
-      margin: 0 0 24px 0;
+      margin: 0 0 20px 0;
       line-height: 1.5;
     }
     
+    .modal-subtitle span {
+      color: #FFD700;
+      font-weight: 700;
+    }
+    
+    .prize-box {
+      border: 2px dashed #00CED1;
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background: rgba(0, 206, 209, 0.05);
+    }
+    
+    .prize-box-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: #FF6B9D;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    
+    .prize-value {
+      color: #00CED1;
+      font-size: 52px;
+      font-weight: 800;
+      margin: 0;
+      line-height: 1.1;
+    }
+    
+    .prize-description {
+      color: #888;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+    
     .modal-btn {
-      display: inline-block;
-      background: linear-gradient(135deg, #4ADE80, #22C55E);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: linear-gradient(135deg, #FF6B9D, #FF4D7D);
       color: #fff;
       border: none;
-      padding: 16px 40px;
-      border-radius: 12px;
-      font-size: 16px;
+      padding: 18px 24px;
+      border-radius: 14px;
+      font-size: 18px;
       font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 4px 0 #16A34A;
       transition: transform 0.2s, box-shadow 0.2s;
       -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 4px 15px rgba(255, 77, 125, 0.4);
     }
     
     .modal-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 #16A34A;
+      box-shadow: 0 6px 20px rgba(255, 77, 125, 0.5);
     }
     
     .modal-btn:active {
-      transform: translateY(2px);
-      box-shadow: 0 2px 0 #16A34A;
+      transform: translateY(1px);
     }
     
     .modal-btn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
+    }
+    
+    .timer-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #2a2a2a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 12px;
+    }
+    
+    .timer-box svg {
+      color: #FFD700;
+      width: 18px;
+      height: 18px;
+    }
+    
+    .timer-text {
+      color: #aaa;
+      font-size: 14px;
+    }
+    
+    .timer-text span {
+      color: #FF6B6B;
+      font-weight: 700;
     }
     
     /* Body lock when modal is open */
@@ -411,10 +467,35 @@
   <!-- Modal -->
   <div class="modal-overlay" id="modal">
     <div class="modal" onclick="event.stopPropagation()">
-      <h2 class="modal-title">Congratulations!</h2>
-      <div class="modal-prize" id="prizeAmount">+$289</div>
-      <p class="modal-text">Your prize has been added to your balance. Click below to claim your reward!</p>
-      <button class="modal-btn" onclick="claimPrize()">CLAIM PRIZE</button>
+      <h2 class="modal-title">
+        <span>🎉</span>
+        <span>Congratulations!</span>
+        <span>🎉</span>
+      </h2>
+      <p class="modal-subtitle">You are our client number <span>1000</span> and won an exclusive prize.</p>
+      
+      <div class="prize-box">
+        <div class="prize-box-title">
+          <span>🎊</span>
+          <span>Amazing! You won:</span>
+        </div>
+        <p class="prize-value">50% OFF</p>
+        <p class="prize-description">Exclusive prize on the platform</p>
+      </div>
+      
+      <button class="modal-btn" onclick="claimPrize()">
+        <span>🎁</span>
+        <span>CLAIM MY PRIZE</span>
+      </button>
+      
+      <div class="timer-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+          <line x1="12" y1="9" x2="12" y2="13"></line>
+          <line x1="12" y1="17" x2="12.01" y2="17"></line>
+        </svg>
+        <span class="timer-text">This prize expires in <span id="countdown">04:57</span> minutes</span>
+      </div>
     </div>
   </div>
   
@@ -463,6 +544,9 @@
         document.body.classList.add('modal-open');
         modal.classList.add('show');
         
+        // Start countdown timer
+        startCountdown();
+        
         // Play win sound
         try {
           const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2058/2058-preview.mp3');
@@ -470,6 +554,31 @@
           audio.play().catch(() => {});
         } catch(e) {}
       }
+    }
+    
+    function startCountdown() {
+      let minutes = 4;
+      let seconds = 57;
+      const countdownEl = document.getElementById('countdown');
+      
+      const timer = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            clearInterval(timer);
+            return;
+          }
+          minutes--;
+          seconds = 59;
+        } else {
+          seconds--;
+        }
+        
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(seconds).padStart(2, '0');
+        if (countdownEl) {
+          countdownEl.textContent = `${formattedMinutes}:${formattedSeconds}`;
+        }
+      }, 1000);
     }
     
     function closeModal() {
