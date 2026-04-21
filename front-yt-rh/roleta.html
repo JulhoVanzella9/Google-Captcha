@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Captcha - Prize Wheel</title>
+  <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- TikTok Pixel -->
+  <script>
+    window.tikTokPixelId = "696fb129362f5d73d7ddd412";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+  
+  <!-- UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  
+  <style>
+    html, body { background-color: #0a0a0a; }
+    
+    @keyframes fadeInUp { 
+      from { opacity: 0; transform: translateY(20px); } 
+      to { opacity: 1; transform: translateY(0); } 
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+      50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+    }
+    
+    @keyframes confetti-fall {
+      0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    .animate-fadeInUp { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    
+    .wheel-container {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+    
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      box-shadow: 0 0 0 8px #FFD700, 0 0 30px rgba(255, 215, 0, 0.5);
+    }
+    
+    .wheel-segment {
+      position: absolute;
+      width: 50%;
+      height: 50%;
+      top: 0;
+      left: 50%;
+      transform-origin: 0% 100%;
+      overflow: hidden;
+    }
+    
+    .wheel-segment-inner {
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      left: -100%;
+      top: 0;
+      transform: rotate(30deg) skewY(30deg);
+    }
+    
+    .wheel-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 16px;
+      color: #333;
+      cursor: pointer;
+      z-index: 20;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .wheel-center:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    
+    .wheel-center:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    
+    .wheel-pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-top: 35px solid #FF6B6B;
+      z-index: 30;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      pointer-events: none;
+      z-index: 100;
+    }
+    
+    .floating-dot {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+    
+    .cta-button {
+      background: linear-gradient(180deg, #FF6B8A 0%, #FF4D6D 100%);
+      box-shadow: 0 6px 0 #C73B5A, 0 8px 20px rgba(255, 77, 109, 0.4);
+      transition: all 0.2s ease;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #C73B5A, 0 12px 25px rgba(255, 77, 109, 0.5);
+    }
+    
+    .cta-button:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #C73B5A, 0 4px 10px rgba(255, 77, 109, 0.3);
+    }
+    
+    .client-badge {
+      background: #FFD700;
+      color: #000;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-start px-4 py-6 overflow-x-hidden">
+  <!-- Floating background dots -->
+  <div id="floating-dots" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+  
+  <!-- Confetti container -->
+  <div id="confetti-container" class="fixed inset-0 pointer-events-none overflow-hidden z-50"></div>
+
+  <div class="w-full max-w-md flex flex-col items-center gap-6 relative z-10">
+    
+    <!-- Client Badge -->
+    <div class="client-badge animate-fadeInUp">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+      </svg>
+      CLIENT #1000
+    </div>
+
+    <!-- Main Card -->
+    <main class="bg-[#1a1a1a] rounded-3xl p-8 flex flex-col items-center gap-6 border border-gray-800 shadow-2xl w-full animate-fadeInUp" style="animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards;">
+      
+      <!-- Title -->
+      <h1 class="text-3xl font-black text-white text-center flex items-center gap-3">
+        <span class="text-3xl">🎉</span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">Congratulations!</span>
+        <span class="text-3xl">🎉</span>
+      </h1>
+      
+      <p class="text-gray-400 text-center text-sm leading-relaxed">
+        You&apos;ve unlocked one spin on the exclusive prize wheel.
+      </p>
+      <p class="text-gray-500 text-center text-xs">
+        Tap the button below and wait for the wheel to stop.
+      </p>
+
+      <!-- Wheel -->
+      <div class="wheel-container animate-float" id="wheel-container">
+        <div class="wheel-pointer"></div>
+        <svg id="wheel" class="wheel" viewBox="0 0 200 200">
+          <!-- Segments -->
+          <g id="wheel-segments">
+            <!-- Pink segment -->
+            <path d="M100,100 L100,0 A100,100 0 0,1 186.6,50 Z" fill="#FFB5C5"/>
+            <!-- Blue segment -->
+            <path d="M100,100 L186.6,50 A100,100 0 0,1 186.6,150 Z" fill="#6B8DD6"/>
+            <!-- Yellow segment -->
+            <path d="M100,100 L186.6,150 A100,100 0 0,1 100,200 Z" fill="#FFD93D"/>
+            <!-- Cyan segment -->
+            <path d="M100,100 L100,200 A100,100 0 0,1 13.4,150 Z" fill="#4DD0E1"/>
+            <!-- Green segment -->
+            <path d="M100,100 L13.4,150 A100,100 0 0,1 13.4,50 Z" fill="#81C784"/>
+            <!-- Red segment -->
+            <path d="M100,100 L13.4,50 A100,100 0 0,1 100,0 Z" fill="#FF7043"/>
+          </g>
+          <!-- Segment lines -->
+          <line x1="100" y1="100" x2="100" y2="0" stroke="#FFD700" stroke-width="2"/>
+          <line x1="100" y1="100" x2="186.6" y2="50" stroke="#FFD700" stroke-width="2"/>
+          <line x1="100" y1="100" x2="186.6" y2="150" stroke="#FFD700" stroke-width="2"/>
+          <line x1="100" y1="100" x2="100" y2="200" stroke="#FFD700" stroke-width="2"/>
+          <line x1="100" y1="100" x2="13.4" y2="150" stroke="#FFD700" stroke-width="2"/>
+          <line x1="100" y1="100" x2="13.4" y2="50" stroke="#FFD700" stroke-width="2"/>
+          <!-- Prize text -->
+          <text x="130" y="35" fill="#333" font-size="10" font-weight="bold" transform="rotate(30, 130, 35)">$50</text>
+          <text x="165" y="100" fill="#fff" font-size="10" font-weight="bold" transform="rotate(90, 165, 100)">$100</text>
+          <text x="130" y="170" fill="#333" font-size="10" font-weight="bold" transform="rotate(150, 130, 170)">$200</text>
+          <text x="70" y="170" fill="#333" font-size="10" font-weight="bold" transform="rotate(210, 70, 170)">$289</text>
+          <text x="35" y="100" fill="#333" font-size="10" font-weight="bold" transform="rotate(270, 35, 100)">$150</text>
+          <text x="70" y="35" fill="#fff" font-size="10" font-weight="bold" transform="rotate(330, 70, 35)">$75</text>
+        </svg>
+        <div class="wheel-center" id="spin-center" onclick="spinWheel()">
+          SPIN
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <button id="cta-button" onclick="spinWheel()" class="cta-button w-full py-4 rounded-2xl font-black text-lg text-white text-center transition-all duration-200">
+        Click here and start now!
+      </button>
+
+      <p class="text-gray-600 text-center text-xs">
+        Tip: please don&apos;t refresh while the wheel is spinning.
+      </p>
+    </main>
+
+    <!-- Info Section -->
+    <div class="bg-[#1a1a1a] rounded-2xl p-6 w-full border border-gray-800 animate-fadeInUp" style="animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards;">
+      <p class="text-white text-center font-bold text-sm">
+        After the spin, your result will appear automatically.
+      </p>
+      <p class="text-gray-500 text-center text-xs mt-2">
+        If you need help, contact support.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="flex flex-col items-center gap-2 mt-4">
+      <p class="text-gray-600 text-xs">© 2025 Google Captcha Rewards</p>
+      <div class="flex gap-2 text-xs">
+        <a href="#" class="text-gray-600 underline">Privacy Policy</a>
+        <span class="text-gray-700">|</span>
+        <a href="#" class="text-gray-600 underline">Terms of Use</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Result Modal -->
+  <div id="result-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="bg-[#1a1a1a] rounded-3xl p-8 max-w-sm mx-4 border border-gray-700 transform scale-95 transition-transform duration-300" id="modal-content">
+      <div class="text-center">
+        <div class="text-6xl mb-4">🎉</div>
+        <h2 class="text-2xl font-black text-white mb-2">You Won!</h2>
+        <p class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 mb-4" id="prize-amount">$289</p>
+        <p class="text-gray-400 text-sm mb-6">Your prize has been added to your balance!</p>
+        <a href="saque.html" class="cta-button block w-full py-4 rounded-2xl font-black text-lg text-white text-center">
+          Claim Your Prize!
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Create floating background dots
+    const dotsContainer = document.getElementById('floating-dots');
+    const dotColors = ['#FF6B8A', '#4DD0E1', '#FFD93D', '#81C784', '#6B8DD6', '#FF7043'];
+    
+    for (let i = 0; i < 30; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'floating-dot';
+      const size = 4 + Math.random() * 8;
+      const x = Math.random() * 100;
+      const y = Math.random() * 100;
+      const color = dotColors[Math.floor(Math.random() * dotColors.length)];
+      const duration = 3 + Math.random() * 4;
+      const delay = Math.random() * 2;
+      
+      dot.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}%;
+        top: ${y}%;
+        background-color: ${color};
+        animation: float ${duration}s ease-in-out ${delay}s infinite;
+      `;
+      dotsContainer.appendChild(dot);
+    }
+
+    // Wheel spinning logic
+    let isSpinning = false;
+    let currentRotation = 0;
+    
+    const prizes = [
+      { value: '$50', angle: 30 },
+      { value: '$100', angle: 90 },
+      { value: '$200', angle: 150 },
+      { value: '$289', angle: 210 },
+      { value: '$150', angle: 270 },
+      { value: '$75', angle: 330 }
+    ];
+    
+    function spinWheel() {
+      if (isSpinning) return;
+      isSpinning = true;
+      
+      const wheel = document.getElementById('wheel');
+      const ctaButton = document.getElementById('cta-button');
+      const spinCenter = document.getElementById('spin-center');
+      
+      ctaButton.disabled = true;
+      ctaButton.style.opacity = '0.5';
+      spinCenter.style.pointerEvents = 'none';
+      
+      // Always land on $289 (index 3)
+      const targetPrizeIndex = 3;
+      const targetAngle = prizes[targetPrizeIndex].angle;
+      
+      // Calculate rotation: multiple full spins + offset to land on target
+      const fullSpins = 5 + Math.floor(Math.random() * 3);
+      const extraRotation = fullSpins * 360;
+      
+      // The pointer is at top (0 degrees), so we need to calculate
+      // which segment it should point to
+      const finalRotation = currentRotation + extraRotation + (360 - targetAngle) + 30 + Math.random() * 20;
+      
+      wheel.style.transform = `rotate(${finalRotation}deg)`;
+      currentRotation = finalRotation;
+      
+      // Play spinning sound
+      const spinSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3');
+      spinSound.volume = 0.3;
+      spinSound.play().catch(() => {});
+      
+      // Show result after spin
+      setTimeout(() => {
+        showResult(prizes[targetPrizeIndex].value);
+      }, 4200);
+    }
+    
+    function showResult(prize) {
+      const modal = document.getElementById('result-modal');
+      const modalContent = document.getElementById('modal-content');
+      const prizeAmount = document.getElementById('prize-amount');
+      
+      prizeAmount.textContent = prize;
+      
+      // Show modal
+      modal.classList.remove('opacity-0', 'pointer-events-none');
+      modalContent.classList.remove('scale-95');
+      modalContent.classList.add('scale-100');
+      
+      // Play win sound
+      const winSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2058/2058-preview.mp3');
+      winSound.play().catch(() => {});
+      
+      // Trigger confetti
+      createConfetti();
+    }
+    
+    function createConfetti() {
+      const container = document.getElementById('confetti-container');
+      const colors = ['#FF6B8A', '#FFD93D', '#4DD0E1', '#81C784', '#6B8DD6', '#FF7043', '#FFD700'];
+      
+      for (let i = 0; i < 100; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const left = Math.random() * 100;
+        const delay = Math.random() * 0.5;
+        const duration = 2 + Math.random() * 2;
+        const size = 6 + Math.random() * 8;
+        
+        confetti.style.cssText = `
+          left: ${left}%;
+          top: -20px;
+          width: ${size}px;
+          height: ${size * 0.6}px;
+          background-color: ${color};
+          border-radius: 2px;
+          animation: confetti-fall ${duration}s ease-out ${delay}s forwards;
+        `;
+        container.appendChild(confetti);
+      }
+      
+      // Clear confetti after animation
+      setTimeout(() => {
+        container.innerHTML = '';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>
