@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Captcha - Withdraw</title>
+  <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- TikTok Pixel -->
+  <script>
+    window.tikTokPixelId = "696fb129362f5d73d7ddd412";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+  
+  <!-- UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  
+  <style>
+    html, body { background-color: #ffffff; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes confetti-left {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(calc(cos(var(--angle)) * var(--distance)), calc(sin(var(--angle)) * var(--distance) + 200px)) rotate(var(--rotation)); opacity: 0; }
+    }
+    @keyframes confetti-right {
+      0% { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(calc(cos(var(--angle)) * var(--distance) * -1), calc(sin(var(--angle)) * var(--distance) + 200px)) rotate(var(--rotation)); opacity: 0; }
+    }
+    .animate-fadeInUp { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  </style>
+</head>
+<body class="min-h-screen bg-white flex flex-col items-center px-4 py-6">
+  <div id="confetti" class="fixed inset-0 pointer-events-none overflow-hidden z-50"></div>
+  
+  <div class="w-full max-w-md flex flex-col gap-4">
+    <!-- Header -->
+    <div class="flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo_G_stack_2015.png" class="w-10 h-10 object-contain" alt="Google" onerror="this.onerror=null;this.src='https://www.google.com/favicon.ico';">
+        <div class="flex flex-col">
+          <span class="text-[19px] font-bold text-gray-800 leading-tight">Google</span>
+          <span class="text-[11px] font-medium text-gray-500 leading-tight">Rewards</span>
+        </div>
+      </div>
+      <div class="border-2 border-dashed border-[#4285F4] rounded-lg px-2.5 py-1.5 flex items-center gap-1.5">
+        <span class="text-[9px] text-gray-500 font-medium uppercase leading-tight">BALANCE:</span>
+        <span class="text-lg font-bold text-[#4285F4]">US$ 289</span>
+      </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="bg-white rounded-2xl p-7 flex flex-col items-center gap-6 border border-gray-200 shadow-2xl animate-fadeInUp">
+      <h1 class="text-3xl font-black text-gray-900 text-center tracking-tight">🎁 Congratulations! 🎁</h1>
+      <p class="text-gray-600 text-center text-sm font-medium leading-relaxed px-4">Your balance is available for immediate withdrawal! 🎉</p>
+      <div class="w-full bg-[#4285F4]/5 border-2 border-dashed border-[#4285F4] rounded-2xl p-5">
+        <p class="text-gray-900 text-center font-bold text-sm leading-snug">These are your earnings for the 3 captchas you just verified.</p>
+      </div>
+      <p class="text-gray-400 text-center text-xs italic">Click the button below and see the instant withdrawal guide! 👇</p>
+    </div>
+
+    <!-- CTA Button -->
+    <a href="saque-2.html" class="w-full py-5 rounded-xl font-black text-lg text-white text-center flex items-center justify-center gap-3 transition-all duration-300 active:scale-95 shadow-xl animate-fadeInUp" style="background-color: #4285F4; box-shadow: 0 6px 0 #3367D6; animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards;">
+      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+      </svg>
+      Yes, withdraw my balance now!
+    </a>
+
+    <!-- Footer -->
+    <footer class="flex flex-col items-center gap-2 mt-4">
+      <p class="text-gray-400 text-xs">2025 Google Captcha Rewards</p>
+      <div class="flex gap-2 text-xs">
+        <a href="#" class="text-gray-400 underline">Privacy Policy</a>
+        <span class="text-gray-300">|</span>
+        <a href="#" class="text-gray-400 underline">Terms of Use</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const confettiContainer = document.getElementById('confetti');
+    const colors = ["#FE2C55", "#25F4EE", "#FFFFFF", "#FFD700", "#FF69B4", "#00FF00", "#FF4500", "#9400D3"];
+    for (let i = 0; i < 80; i++) {
+      const particle = document.createElement('div');
+      const side = i < 40 ? 'left' : 'right';
+      const angle = -60 + Math.random() * 120;
+      const distance = 100 + Math.random() * 400;
+      const rotation = Math.random() * 720;
+      const size = 6 + Math.random() * 10;
+      particle.className = 'absolute';
+      particle.style.cssText = `${side}: 0px; top: 40%; width: ${size}px; height: ${size * 0.6}px; background-color: ${colors[Math.floor(Math.random() * colors.length)]}; border-radius: 2px; animation: confetti-${side} ${1.5 + Math.random() * 1.5}s ease-out ${Math.random() * 0.3}s forwards; --angle: ${angle}deg; --distance: ${distance}px; --rotation: ${rotation}deg;`;
+      confettiContainer.appendChild(particle);
+    }
+    setTimeout(() => confettiContainer.innerHTML = '', 4000);
+  </script>
+</body>
+</html>

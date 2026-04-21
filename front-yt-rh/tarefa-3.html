@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Captcha - Task 3</title>
+  <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+    @keyframes pulseGlow { 0%, 100% { box-shadow: 0 0 5px rgba(66,133,244,0.2); } 50% { box-shadow: 0 0 20px rgba(66,133,244,0.6); } }
+    
+    .animate-fadeInUp { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .animate-slideInRight { animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .pulse-glow { animation: pulseGlow 2s infinite; }
+    
+    .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #fff; padding: 2px; }
+    .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
+    .captcha-item:hover { filter: brightness(0.9); }
+    .captcha-item.selected { border: 3px solid #4A90E2; padding: 0; }
+    .captcha-item.selected img { transform: scale(0.85); border-radius: 4px; }
+    .check-badge { position: absolute; top: 4px; left: 4px; width: 22px; height: 22px; background-color: #4A90E2; border-radius: 50%; display: flex; items-center; justify-center; opacity: 0; transform: scale(0.5); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 10; border: 2px solid white; }
+    .selected .check-badge { opacity: 1; transform: scale(1); }
+  </style>
+  
+  <!-- TikTok Pixel -->
+  <script>
+    window.tikTokPixelId = "696fb129362f5d73d7ddd412";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+  
+  <!-- UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  
+  <style>html, body { background-color: #ffffff; }</style>
+</head>
+<body class="min-h-screen bg-white flex flex-col items-center px-4 py-6">
+  <div class="w-full max-w-md flex flex-col gap-4">
+    <!-- Header -->
+    <header class="flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo_G_stack_2015.png" class="w-10 h-10 object-contain" alt="Google" onerror="this.onerror=null;this.src='https://www.google.com/favicon.ico';">
+        <div class="flex flex-col">
+          <span class="text-[19px] font-bold text-gray-800 leading-tight">Google</span>
+          <span class="text-[11px] font-medium text-gray-500 leading-tight">Rewards</span>
+        </div>
+      </div>
+      <div id="balanceBox" class="border-2 border-dashed border-[#4285F4] rounded-lg px-2.5 py-1.5 flex items-center gap-1.5 transition-all duration-300">
+        <span class="text-[9px] text-gray-500 font-medium uppercase leading-tight">BALANCE:</span>
+        <span id="balance" class="text-lg font-bold text-[#4285F4] transition-all duration-100">US$ 189</span>
+      </div>
+    </header>
+
+    <!-- Main Card -->
+    <main class="bg-white rounded-lg shadow-xl border border-gray-200 flex flex-col overflow-hidden animate-fadeInUp">
+      <div class="bg-[#4A90E2] p-5 text-white shadow-inner">
+        <h2 class="text-xl font-extrabold tracking-tight">Were all cars selected correctly?</h2>
+        <p class="text-sm opacity-90 mt-1 font-medium">Verify the selection below and confirm.</p>
+      </div>
+      
+      <div class="captcha-grid p-2">
+        <!-- Row 1 -->
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Citroen_C4_Sedan_(49974842457).jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/The_Earth_seen_from_Apollo_17.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1995_Pontiac_Grand_Prix_SE_in_Bright_Red,_front_left,_06-26-2022.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <!-- Row 2 -->
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/%2701-%2704_Mercedes-Benz_W203_Sedan_Taxi.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Traffic_lights.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nice_beautiful_style_car.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <!-- Row 3 -->
+        <div class="captcha-item">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rome_(Italy),_Bicycle_--_2013_--_4368.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/2008_Pontiac_Grand_Prix,_Front_Left,_03-21-2021.jpg?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+        <div class="captcha-item selected">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cadillac_XLR.JPG?width=400" class="w-full h-full object-cover">
+          <div class="check-badge"><svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg></div>
+        </div>
+      </div>
+      
+      <div class="p-4 border-t border-gray-100 bg-gray-50/50 flex flex-col items-center gap-2">
+        <p class="text-sm font-semibold text-gray-700">Is this captcha selection correct?</p>
+      </div>
+    </main>
+
+    <!-- Reaction Buttons -->
+    <div class="flex justify-center gap-4 w-full animate-fadeInUp" style="animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards;">
+      <button onclick="handleReaction('incorrect')" class="flex-1 max-w-[170px] h-14 rounded-xl flex items-center justify-center gap-2 bg-white border-2 border-[#EF4444] text-[#EF4444] font-bold hover:bg-[#EF4444] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg active:scale-95">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>
+        Incorrect
+      </button>
+      <button onclick="handleReaction('correct')" class="flex-1 max-w-[170px] h-14 rounded-xl flex items-center justify-center gap-2 bg-white border-2 border-[#22C55E] text-[#22C55E] font-bold hover:bg-[#22C55E] hover:text-white transition-all duration-300 shadow-md hover:shadow-lg active:scale-95">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+        Correct
+      </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="flex flex-col items-center gap-1.5 mt-4">
+      <span class="text-gray-400 text-xs">© 2025 Google Captcha Rewards</span>
+      <div class="flex gap-1.5 text-[10px]">
+        <a href="#" class="text-gray-400 underline">Privacy Policy</a>
+        <span class="text-gray-300">|</span>
+        <a href="#" class="text-gray-400 underline">Terms of Use</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    let selected = false;
+    function handleReaction(reaction) {
+      if (selected) return;
+      selected = true;
+      
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2058/2058-preview.mp3');
+      audio.play().catch(() => {});
+      
+      const balanceEl = document.getElementById('balance');
+      const balanceBox = document.getElementById('balanceBox');
+      
+      // Better animation feedback
+      balanceBox.classList.add('scale-110', 'shadow-[0_0_20px_rgba(66,133,244,0.4)]', 'border-solid');
+      
+      let current = 189; 
+      const target = 289; 
+      const duration = 1500; 
+      const start = performance.now();
+      
+      function animate(time) {
+        const elapsed = time - start;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        current = Math.round(189 + (target - 189) * eased);
+        balanceEl.textContent = 'US$ ' + current;
+        
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          balanceBox.classList.remove('scale-110', 'shadow-[0_0_20px_rgba(66,133,244,0.4)]');
+          setTimeout(() => window.location.href = 'saque.html', 800);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+  </script>
+</body>
+</html>

