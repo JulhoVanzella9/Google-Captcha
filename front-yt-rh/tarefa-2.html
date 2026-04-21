@@ -19,7 +19,7 @@
     .captcha-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; background-color: #fff; padding: 2px; }
     .captcha-item { position: relative; aspect-ratio: 1; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; }
     .captcha-item:hover { filter: brightness(0.9); }
-    .captcha-item.selected { box-shadow: inset 0 0 0 4px #4A90E2; }
+    .captcha-item.selected::after { content: ''; position: absolute; inset: 0; border: 4px solid #4A90E2; pointer-events: none; z-index: 10; }
   </style>
   
   <!-- TikTok Pixel -->
