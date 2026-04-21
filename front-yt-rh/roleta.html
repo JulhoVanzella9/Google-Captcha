@@ -2,122 +2,100 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Google Captcha - Prize Wheel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Prize Wheel</title>
   <link rel="icon" type="image/x-icon" href="https://www.google.com/favicon.ico">
-  <script src="https://cdn.tailwindcss.com"></script>
-  
-  <!-- TikTok Pixel -->
-  <script>
-    window.tikTokPixelId = "696fb129362f5d73d7ddd412";
-    var a = document.createElement("script");
-    a.setAttribute("async", "");
-    a.setAttribute("defer", "");
-    a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel-tiktok.js");
-    document.head.appendChild(a);
-  </script>
-  
-  <!-- UTMify -->
-  <script
-    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
-    data-utmify-prevent-xcod-sck
-    data-utmify-prevent-subids
-    async
-    defer
-  ></script>
-  
   <style>
-    html, body { background-color: #0a0a0a; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     
-    @keyframes fadeInUp { 
-      from { opacity: 0; transform: translateY(20px); } 
-      to { opacity: 1; transform: translateY(0); } 
+    body {
+      min-height: 100vh;
+      background-color: #0a0a0a;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 15s infinite ease-in-out;
     }
     
     @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+      25% { transform: translateY(-30px) translateX(20px); opacity: 1; }
+      50% { transform: translateY(-10px) translateX(-15px); opacity: 0.8; }
+      75% { transform: translateY(-40px) translateX(10px); opacity: 0.6; }
     }
     
-    @keyframes pulse-glow {
-      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-      50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+    /* Client badge */
+    .client-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #FFD700, #FFA500);
+      color: #000;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 16px;
+      margin: 20px auto;
+      width: fit-content;
+      box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
     }
     
-    @keyframes confetti-fall {
-      0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    .client-badge svg {
+      width: 24px;
+      height: 24px;
     }
     
-    .animate-fadeInUp { animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-    .animate-float { animation: float 3s ease-in-out infinite; }
-    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    /* Main card */
+    .main-card {
+      background: #1a1a1a;
+      border-radius: 20px;
+      margin: 0 16px 20px;
+      padding: 30px 20px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
     
+    /* Title */
+    .title {
+      text-align: center;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    
+    .subtitle {
+      text-align: center;
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    /* Wheel container */
     .wheel-container {
       position: relative;
       width: 280px;
       height: 280px;
+      margin: 30px auto;
     }
     
-    .wheel {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      position: relative;
-      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
-      box-shadow: 0 0 0 8px #FFD700, 0 0 30px rgba(255, 215, 0, 0.5);
-    }
-    
-    .wheel-segment {
-      position: absolute;
-      width: 50%;
-      height: 50%;
-      top: 0;
-      left: 50%;
-      transform-origin: 0% 100%;
-      overflow: hidden;
-    }
-    
-    .wheel-segment-inner {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      left: -100%;
-      top: 0;
-      transform: rotate(30deg) skewY(30deg);
-    }
-    
-    .wheel-center {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80px;
-      height: 80px;
-      background: white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 900;
-      font-size: 16px;
-      color: #333;
-      cursor: pointer;
-      z-index: 20;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    
-    .wheel-center:hover {
-      transform: translate(-50%, -50%) scale(1.05);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
-    }
-    
-    .wheel-center:active {
-      transform: translate(-50%, -50%) scale(0.95);
-    }
-    
-    .wheel-pointer {
+    /* Pointer */
+    .pointer {
       position: absolute;
       top: -15px;
       left: 50%;
@@ -126,301 +104,345 @@
       height: 0;
       border-left: 18px solid transparent;
       border-right: 18px solid transparent;
-      border-top: 35px solid #FF6B6B;
-      z-index: 30;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.3));
+      border-top: 35px solid #FF4757;
+      z-index: 20;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
     }
     
+    .pointer::after {
+      content: '';
+      position: absolute;
+      top: -35px;
+      left: -12px;
+      width: 0;
+      height: 0;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+      border-top: 24px solid #FF6B7A;
+    }
+    
+    /* Wheel */
+    .wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      position: relative;
+      transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      box-shadow: 
+        0 0 0 8px #FFD700,
+        0 0 0 12px #B8860B,
+        0 0 30px rgba(255, 215, 0, 0.5);
+    }
+    
+    .wheel svg {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+    
+    /* Center button */
+    .center-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      font-weight: 800;
+      font-size: 14px;
+      color: #333;
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .center-btn:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+    
+    .center-btn:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+    
+    .center-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+    
+    /* CTA Button */
+    .cta-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #FF6B81, #FF4757);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 6px 0 #CC3A47, 0 8px 20px rgba(255, 71, 87, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #CC3A47, 0 12px 25px rgba(255, 71, 87, 0.5);
+    }
+    
+    .cta-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 2px 0 #CC3A47, 0 4px 10px rgba(255, 71, 87, 0.3);
+    }
+    
+    /* Tip */
+    .tip {
+      text-align: center;
+      color: #666;
+      font-size: 12px;
+      margin-top: 16px;
+    }
+    
+    /* Footer */
+    .footer {
+      background: #1a1a1a;
+      border-top: 1px solid #333;
+      padding: 20px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    
+    .footer-title {
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    
+    .footer-text {
+      color: #666;
+      font-size: 12px;
+    }
+    
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .modal-overlay.show {
+      display: flex;
+    }
+    
+    .modal {
+      background: #1a1a1a;
+      border-radius: 20px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 340px;
+      margin: 20px;
+      animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    @keyframes modalPop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    
+    .modal-title {
+      color: #FFD700;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    
+    .modal-prize {
+      color: #4ADE80;
+      font-size: 48px;
+      font-weight: 800;
+      margin: 20px 0;
+    }
+    
+    .modal-text {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+    
+    .modal-btn {
+      background: linear-gradient(135deg, #4ADE80, #22C55E);
+      color: #fff;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #16A34A;
+      transition: transform 0.2s;
+    }
+    
+    .modal-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .modal-btn:active {
+      transform: translateY(2px);
+    }
+    
+    /* Confetti */
     .confetti {
       position: fixed;
       width: 10px;
       height: 10px;
-      pointer-events: none;
-      z-index: 100;
+      top: -10px;
+      z-index: 101;
+      animation: confettiFall 3s linear forwards;
     }
     
-    .floating-dot {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      opacity: 0.6;
-    }
-    
-    .cta-button {
-      background: linear-gradient(180deg, #FF6B8A 0%, #FF4D6D 100%);
-      box-shadow: 0 6px 0 #C73B5A, 0 8px 20px rgba(255, 77, 109, 0.4);
-      transition: all 0.2s ease;
-    }
-    
-    .cta-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 0 #C73B5A, 0 12px 25px rgba(255, 77, 109, 0.5);
-    }
-    
-    .cta-button:active {
-      transform: translateY(4px);
-      box-shadow: 0 2px 0 #C73B5A, 0 4px 10px rgba(255, 77, 109, 0.3);
-    }
-    
-    .client-badge {
-      background: #FFD700;
-      color: #000;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-weight: 800;
-      font-size: 16px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col items-center justify-start px-4 py-6 overflow-x-hidden">
-  <!-- Floating background dots -->
-  <div id="floating-dots" class="fixed inset-0 pointer-events-none overflow-hidden"></div>
+<body>
+  <!-- Floating particles -->
+  <div class="particle" style="left: 5%; top: 20%; background: #FF6B81; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 15%; top: 60%; background: #00D9FF; animation-delay: 2s;"></div>
+  <div class="particle" style="left: 85%; top: 15%; background: #00D9FF; animation-delay: 1s;"></div>
+  <div class="particle" style="left: 90%; top: 50%; background: #FF6B81; animation-delay: 3s;"></div>
+  <div class="particle" style="left: 10%; top: 80%; background: #FFD700; animation-delay: 4s;"></div>
+  <div class="particle" style="left: 80%; top: 75%; background: #4ADE80; animation-delay: 2.5s;"></div>
+  <div class="particle" style="left: 50%; top: 90%; background: #FF6B81; animation-delay: 1.5s;"></div>
+  <div class="particle" style="left: 30%; top: 10%; background: #00D9FF; animation-delay: 3.5s;"></div>
   
-  <!-- Confetti container -->
-  <div id="confetti-container" class="fixed inset-0 pointer-events-none overflow-hidden z-50"></div>
-
-  <div class="w-full max-w-md flex flex-col items-center gap-6 relative z-10">
+  <!-- Client Badge -->
+  <div class="client-badge">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+    </svg>
+    CLIENT #1000
+  </div>
+  
+  <!-- Main Card -->
+  <div class="main-card">
+    <h1 class="title">Congratulations!</h1>
+    <p class="subtitle">You've unlocked one spin on the exclusive prize wheel.</p>
+    <p class="subtitle">Tap the button below and wait for the wheel to stop.</p>
     
-    <!-- Client Badge -->
-    <div class="client-badge animate-fadeInUp">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-      </svg>
-      CLIENT #1000
-    </div>
-
-    <!-- Main Card -->
-    <main class="bg-[#1a1a1a] rounded-3xl p-8 flex flex-col items-center gap-6 border border-gray-800 shadow-2xl w-full animate-fadeInUp" style="animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards;">
-      
-      <!-- Title -->
-      <h1 class="text-3xl font-black text-white text-center flex items-center gap-3">
-        <span class="text-3xl">🎉</span>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200">Congratulations!</span>
-        <span class="text-3xl">🎉</span>
-      </h1>
-      
-      <p class="text-gray-400 text-center text-sm leading-relaxed">
-        You&apos;ve unlocked one spin on the exclusive prize wheel.
-      </p>
-      <p class="text-gray-500 text-center text-xs">
-        Tap the button below and wait for the wheel to stop.
-      </p>
-
-      <!-- Wheel -->
-      <div class="wheel-container animate-float" id="wheel-container">
-        <div class="wheel-pointer"></div>
-        <svg id="wheel" class="wheel" viewBox="0 0 200 200">
-          <!-- Segments -->
-          <g id="wheel-segments">
-            <!-- Pink segment -->
-            <path d="M100,100 L100,0 A100,100 0 0,1 186.6,50 Z" fill="#FFB5C5"/>
-            <!-- Blue segment -->
-            <path d="M100,100 L186.6,50 A100,100 0 0,1 186.6,150 Z" fill="#6B8DD6"/>
-            <!-- Yellow segment -->
-            <path d="M100,100 L186.6,150 A100,100 0 0,1 100,200 Z" fill="#FFD93D"/>
-            <!-- Cyan segment -->
-            <path d="M100,100 L100,200 A100,100 0 0,1 13.4,150 Z" fill="#4DD0E1"/>
-            <!-- Green segment -->
-            <path d="M100,100 L13.4,150 A100,100 0 0,1 13.4,50 Z" fill="#81C784"/>
-            <!-- Red segment -->
-            <path d="M100,100 L13.4,50 A100,100 0 0,1 100,0 Z" fill="#FF7043"/>
-          </g>
-          <!-- Segment lines -->
-          <line x1="100" y1="100" x2="100" y2="0" stroke="#FFD700" stroke-width="2"/>
-          <line x1="100" y1="100" x2="186.6" y2="50" stroke="#FFD700" stroke-width="2"/>
-          <line x1="100" y1="100" x2="186.6" y2="150" stroke="#FFD700" stroke-width="2"/>
-          <line x1="100" y1="100" x2="100" y2="200" stroke="#FFD700" stroke-width="2"/>
-          <line x1="100" y1="100" x2="13.4" y2="150" stroke="#FFD700" stroke-width="2"/>
-          <line x1="100" y1="100" x2="13.4" y2="50" stroke="#FFD700" stroke-width="2"/>
-          <!-- Prize text -->
-          <text x="130" y="35" fill="#333" font-size="10" font-weight="bold" transform="rotate(30, 130, 35)">$50</text>
-          <text x="165" y="100" fill="#fff" font-size="10" font-weight="bold" transform="rotate(90, 165, 100)">$100</text>
-          <text x="130" y="170" fill="#333" font-size="10" font-weight="bold" transform="rotate(150, 130, 170)">$200</text>
-          <text x="70" y="170" fill="#333" font-size="10" font-weight="bold" transform="rotate(210, 70, 170)">$289</text>
-          <text x="35" y="100" fill="#333" font-size="10" font-weight="bold" transform="rotate(270, 35, 100)">$150</text>
-          <text x="70" y="35" fill="#fff" font-size="10" font-weight="bold" transform="rotate(330, 70, 35)">$75</text>
+    <!-- Wheel -->
+    <div class="wheel-container">
+      <div class="pointer"></div>
+      <div class="wheel" id="wheel">
+        <svg viewBox="0 0 200 200">
+          <!-- Segment 1 - Pink/Salmon (top right) -->
+          <path d="M100,100 L100,0 A100,100 0 0,1 186.6,50 Z" fill="#FFB3BA"/>
+          <!-- Segment 2 - Blue -->
+          <path d="M100,100 L186.6,50 A100,100 0 0,1 186.6,150 Z" fill="#5B7FFF"/>
+          <!-- Segment 3 - Yellow -->
+          <path d="M100,100 L186.6,150 A100,100 0 0,1 100,200 Z" fill="#FFE066"/>
+          <!-- Segment 4 - Green -->
+          <path d="M100,100 L100,200 A100,100 0 0,1 13.4,150 Z" fill="#4ADE80"/>
+          <!-- Segment 5 - Cyan -->
+          <path d="M100,100 L13.4,150 A100,100 0 0,1 13.4,50 Z" fill="#00D9FF"/>
+          <!-- Segment 6 - Red/Coral -->
+          <path d="M100,100 L13.4,50 A100,100 0 0,1 100,0 Z" fill="#FF6B6B"/>
         </svg>
-        <div class="wheel-center" id="spin-center" onclick="spinWheel()">
-          SPIN
-        </div>
       </div>
-
-      <!-- CTA Button -->
-      <button id="cta-button" onclick="spinWheel()" class="cta-button w-full py-4 rounded-2xl font-black text-lg text-white text-center transition-all duration-200">
-        Click here and start now!
-      </button>
-
-      <p class="text-gray-600 text-center text-xs">
-        Tip: please don&apos;t refresh while the wheel is spinning.
-      </p>
-    </main>
-
-    <!-- Info Section -->
-    <div class="bg-[#1a1a1a] rounded-2xl p-6 w-full border border-gray-800 animate-fadeInUp" style="animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards;">
-      <p class="text-white text-center font-bold text-sm">
-        After the spin, your result will appear automatically.
-      </p>
-      <p class="text-gray-500 text-center text-xs mt-2">
-        If you need help, contact support.
-      </p>
+      <button class="center-btn" id="spinBtn" onclick="spinWheel()">SPIN</button>
     </div>
-
-    <!-- Footer -->
-    <footer class="flex flex-col items-center gap-2 mt-4">
-      <p class="text-gray-600 text-xs">© 2025 Google Captcha Rewards</p>
-      <div class="flex gap-2 text-xs">
-        <a href="#" class="text-gray-600 underline">Privacy Policy</a>
-        <span class="text-gray-700">|</span>
-        <a href="#" class="text-gray-600 underline">Terms of Use</a>
-      </div>
-    </footer>
+    
+    <button class="cta-btn" onclick="spinWheel()">Click here and start now!</button>
+    
+    <p class="tip">Tip: please don't refresh while the wheel is spinning.</p>
   </div>
-
-  <!-- Result Modal -->
-  <div id="result-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-300">
-    <div class="bg-[#1a1a1a] rounded-3xl p-8 max-w-sm mx-4 border border-gray-700 transform scale-95 transition-transform duration-300" id="modal-content">
-      <div class="text-center">
-        <div class="text-6xl mb-4">🎉</div>
-        <h2 class="text-2xl font-black text-white mb-2">You Won!</h2>
-        <p class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-yellow-200 mb-4" id="prize-amount">$289</p>
-        <p class="text-gray-400 text-sm mb-6">Your prize has been added to your balance!</p>
-        <a href="saque.html" class="cta-button block w-full py-4 rounded-2xl font-black text-lg text-white text-center">
-          Claim Your Prize!
-        </a>
-      </div>
+  
+  <!-- Footer -->
+  <div class="footer">
+    <p class="footer-title">After the spin, your result will appear automatically.</p>
+    <p class="footer-text">If you need help, contact support.</p>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <h2 class="modal-title">YOU WON!</h2>
+      <div class="modal-prize" id="prizeAmount">+$289</div>
+      <p class="modal-text">Congratulations! Your prize has been added to your balance.</p>
+      <button class="modal-btn" onclick="claimPrize()">CLAIM PRIZE</button>
     </div>
   </div>
-
+  
   <script>
-    // Create floating background dots
-    const dotsContainer = document.getElementById('floating-dots');
-    const dotColors = ['#FF6B8A', '#4DD0E1', '#FFD93D', '#81C784', '#6B8DD6', '#FF7043'];
-    
-    for (let i = 0; i < 30; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'floating-dot';
-      const size = 4 + Math.random() * 8;
-      const x = Math.random() * 100;
-      const y = Math.random() * 100;
-      const color = dotColors[Math.floor(Math.random() * dotColors.length)];
-      const duration = 3 + Math.random() * 4;
-      const delay = Math.random() * 2;
-      
-      dot.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${x}%;
-        top: ${y}%;
-        background-color: ${color};
-        animation: float ${duration}s ease-in-out ${delay}s infinite;
-      `;
-      dotsContainer.appendChild(dot);
-    }
-
-    // Wheel spinning logic
     let isSpinning = false;
-    let currentRotation = 0;
-    
-    const prizes = [
-      { value: '$50', angle: 30 },
-      { value: '$100', angle: 90 },
-      { value: '$200', angle: 150 },
-      { value: '$289', angle: 210 },
-      { value: '$150', angle: 270 },
-      { value: '$75', angle: 330 }
-    ];
+    let hasSpun = false;
     
     function spinWheel() {
-      if (isSpinning) return;
+      if (isSpinning || hasSpun) return;
+      
       isSpinning = true;
+      hasSpun = true;
       
       const wheel = document.getElementById('wheel');
-      const ctaButton = document.getElementById('cta-button');
-      const spinCenter = document.getElementById('spin-center');
+      const spinBtn = document.getElementById('spinBtn');
       
-      ctaButton.disabled = true;
-      ctaButton.style.opacity = '0.5';
-      spinCenter.style.pointerEvents = 'none';
+      spinBtn.disabled = true;
+      spinBtn.textContent = '...';
       
-      // Always land on $289 (index 3)
-      const targetPrizeIndex = 3;
-      const targetAngle = prizes[targetPrizeIndex].angle;
-      
-      // Calculate rotation: multiple full spins + offset to land on target
-      const fullSpins = 5 + Math.floor(Math.random() * 3);
-      const extraRotation = fullSpins * 360;
-      
-      // The pointer is at top (0 degrees), so we need to calculate
-      // which segment it should point to
-      const finalRotation = currentRotation + extraRotation + (360 - targetAngle) + 30 + Math.random() * 20;
+      // Calculate rotation - always land on a good prize
+      // 6 segments, each 60 degrees
+      // We want to land on segment showing $289 (green segment at bottom)
+      const baseRotation = 360 * 8; // 8 full rotations
+      const targetAngle = 240; // Land on green segment
+      const finalRotation = baseRotation + targetAngle;
       
       wheel.style.transform = `rotate(${finalRotation}deg)`;
-      currentRotation = finalRotation;
-      
-      // Play spinning sound
-      const spinSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2003/2003-preview.mp3');
-      spinSound.volume = 0.3;
-      spinSound.play().catch(() => {});
       
       // Show result after spin
       setTimeout(() => {
-        showResult(prizes[targetPrizeIndex].value);
-      }, 4200);
+        showConfetti();
+        setTimeout(() => {
+          document.getElementById('modal').classList.add('show');
+        }, 500);
+      }, 4000);
     }
     
-    function showResult(prize) {
-      const modal = document.getElementById('result-modal');
-      const modalContent = document.getElementById('modal-content');
-      const prizeAmount = document.getElementById('prize-amount');
+    function showConfetti() {
+      const colors = ['#FF6B81', '#FFD700', '#4ADE80', '#00D9FF', '#FF6B6B', '#5B7FFF'];
       
-      prizeAmount.textContent = prize;
-      
-      // Show modal
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalContent.classList.remove('scale-95');
-      modalContent.classList.add('scale-100');
-      
-      // Play win sound
-      const winSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2058/2058-preview.mp3');
-      winSound.play().catch(() => {});
-      
-      // Trigger confetti
-      createConfetti();
-    }
-    
-    function createConfetti() {
-      const container = document.getElementById('confetti-container');
-      const colors = ['#FF6B8A', '#FFD93D', '#4DD0E1', '#81C784', '#6B8DD6', '#FF7043', '#FFD700'];
-      
-      for (let i = 0; i < 100; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        const left = Math.random() * 100;
-        const delay = Math.random() * 0.5;
-        const duration = 2 + Math.random() * 2;
-        const size = 6 + Math.random() * 8;
-        
-        confetti.style.cssText = `
-          left: ${left}%;
-          top: -20px;
-          width: ${size}px;
-          height: ${size * 0.6}px;
-          background-color: ${color};
-          border-radius: 2px;
-          animation: confetti-fall ${duration}s ease-out ${delay}s forwards;
-        `;
-        container.appendChild(confetti);
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDuration = (2 + Math.random() * 2) + 's';
+          confetti.style.width = (5 + Math.random() * 10) + 'px';
+          confetti.style.height = confetti.style.width;
+          document.body.appendChild(confetti);
+          
+          setTimeout(() => confetti.remove(), 4000);
+        }, i * 50);
       }
-      
-      // Clear confetti after animation
-      setTimeout(() => {
-        container.innerHTML = '';
-      }, 5000);
+    }
+    
+    function claimPrize() {
+      window.location.href = 'saque-2.html';
     }
   </script>
 </body>
